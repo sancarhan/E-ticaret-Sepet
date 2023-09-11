@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret Sepeti</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        .product {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: inline-block;
+        }
+        
+        .product img {
+            max-width: 100px;
+        }
+        
+        button {
+            font-size: 18px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        .total {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Alışveriş Sepeti</h1>
+
+    <div class="product">
+        <img src="urun1.jpg" alt="Ürün 1">
+        <p>Ürün 1 Fiyat: $10</p>
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+    </div>
+
+    <div class="product">
+        <img src="urun2.jpg" alt="Ürün 2">
+        <p>Ürün 2 Fiyat: $15</p>
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+    </div>
+
+    <div class="total">
+        Toplam Fiyat: $<span id="totalPrice">25</span>
+    </div>
+
+    <script>
+        const decreaseButtons = document.querySelectorAll('.decrease');
+const increaseButtons = document.querySelectorAll('.increase');
+const quantityElements = document.querySelectorAll('.quantity');
+const totalPriceElement = document.getElementById('totalPrice');
+
+let total = 0;
+
+function updateTotalPrice() {
+    let newTotal = 0;
+    quantityElements.forEach((quantityElement, index) => {
+        const quantity = parseInt(quantityElement.textContent);
+        const price = index === 0 ? 10 : 15; // Ürün fiyatlarını güncelleyin
+        newTotal += quantity * price;
+    });
+    total = newTotal;
+    totalPriceElement.textContent = total;
+}
+
+decreaseButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        const quantity = parseInt(quantityElements[index].textContent);
+        if (quantity > 1) {
+            quantityElements[index].textContent = quantity - 1;
+            updateTotalPrice();
+        }
+    });
+});
+
+increaseButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        const quantity = parseInt(quantityElements[index].textContent);
+        quantityElements[index].textContent = quantity + 1;
+        updateTotalPrice();
+    });
+});
+
+updateTotalPrice();
+
+    </script>
+</body>
+</html>
